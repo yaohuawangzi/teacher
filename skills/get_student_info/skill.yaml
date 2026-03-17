@@ -1,0 +1,26 @@
+name: "get_student_info"
+description: "获取学生信息"
+skills:
+  - name: "query_class"
+    description: "查询指定学生的班级。"
+    parameters:
+      - name: "student_id"
+        type: "string"
+        required: true
+    dependencies: []
+
+  - name: "analyze_report"
+    description: "分析学生的个人学习报告。"
+    parameters:
+      - name: "student_id"
+        type: "string"
+        required: true
+    dependencies:
+
+  - name: "query_emergency_contacts"
+    description: "查询指定学生的紧急联系人。"
+    parameters:
+      - name: "student_id"
+        type: "string"
+        required: true
+    dependencies: [ ]

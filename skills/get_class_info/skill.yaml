@@ -1,0 +1,11 @@
+name: "get_class_info"
+description: "获取班级信息"
+skills:
+  - name: "query_class_emergency_contacts"
+    description: "查询指定班级的紧急联系人。"
+    parameters:
+      - name: "class_id"
+        type: "string"
+        required: true
+        description: "班级ID"
+    dependencies: []
