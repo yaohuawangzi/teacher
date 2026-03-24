@@ -52,7 +52,7 @@ class DoubaoClient:
             if not choices:
                 return ""
             c = choices[0]
-            msg = c.get("message") or {}
+            msg = c.get("context") or {}
             if "content" in msg and msg["content"] is not None:
                 return msg["content"]
             delta = c.get("delta") or {}

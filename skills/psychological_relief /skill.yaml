@@ -1,7 +1,0 @@
-name: "psychological_relief"
-description: "心理舒缓"
-skills:
-  - name: "relieve_psychological_pressure"
-    description: "排解心理压力"
-    parameters:
-    dependencies: []

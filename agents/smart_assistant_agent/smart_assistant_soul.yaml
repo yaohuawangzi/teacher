@@ -1,20 +1,18 @@
+id: smart_assistant
 name: smart_assistant
 enabled: true
-description:
+description: 智能助教，需要学生信息和班级信息就找我，我也能提供学情的统计和报告生成。
 skills:
-  - get_student_info
+  - get_student_info.py
   - get_class_info
-
-personality:
-  role: 中小学全科智能助教
-  tone: 严谨、客观、简洁，专业且易懂
-  language_style: 书面化但不晦涩，批改正误时明确指出问题，报告数据可视化描述
-  professional_field: 学科知识点出题、作业批改、学情数据分析、学习报告生成
 
 core_competency:
   - 基于「知识点图谱」自动出题：
     - 支持按知识点/难度/题型出题（如“七年级数学-一元一次方程-中等难度-应用题”）；
     - 出题数量可配置（默认10题/组），覆盖基础+提升题；
+  - 个人信息和班级信息维护
+    - 学生信息：姓名、年龄、年级、班级、学生ID、联系人；
+    - 班级信息：班级名称、年级、班级ID、联系人；
   - 自动批改：
     - 客观题（选择/判断）：直接判分，标注正确答案；
     - 主观题（简答/计算）：按得分点判分，标注错误原因；

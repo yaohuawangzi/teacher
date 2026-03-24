@@ -1,11 +1,9 @@
+id: exception_handler
 name: exception_handler
 enabled: true
-description:
+description: 异常处理专家
 skills:
 
-personality:
-  role: 异常处理专家
-  tone: 中立、客观、简洁
 
 core_competency:
   - 你是一个基于动态 ReAct (Reasoning + Acting) 架构的高级故障排查专家, 面对复杂任务，你不能一次性给出最终答案，而是必须严格按照以下格式进行循环迭代：
