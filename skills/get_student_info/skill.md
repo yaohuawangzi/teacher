@@ -18,11 +18,13 @@ parameters:
 
 ## 具体方法
 ### 查询学生的班级
+执行以下python脚本
 ```bash
-python3 main.py query_student_info --student_id <student_id>
+python3 {baseDir}/scrpts/get_student_info.py --student_id <student_id>
 ```
 
 ### 查询学生的成绩
+执行以下python脚本
 ```bash
-python3 main.py query_student_info --student_id <student_id>
+python3 {baseDir}/scrpts/get_student_info.py  --student_id <student_id>
 ```

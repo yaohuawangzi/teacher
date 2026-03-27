@@ -5,7 +5,7 @@ import model.task
 import utils.llm.doubao_usage
 from core.ability_registration.register_agent_skill_tools import AgentRegister
 from core.context.context_manager import ContextManager
-from core.router_dispatch.dispatcher_skill import DispatcherSkill
+from core.router_dispatch.plan import DispatcherSkill
 from core.task.task_run import TaskManager
 from model.context import MessageContext, UserInfo
 import uuid
@@ -47,7 +47,7 @@ class DispatcherAgent:
                             message_context.add_message(role, content, None, None)
                             # task_info = json.loads(content)
                             sub_session_id = context_manager.generate_sub_session_id(session_id),
-                            dispatch_skill = DispatcherSkill(sub_session_id, user_id,content)
+                            # dispatch_skill = DispatcherSkill(sub_session_id, user_id,content)
 
         # # 生成任务并创建子
         # tasks= []

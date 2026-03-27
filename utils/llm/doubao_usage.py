@@ -37,6 +37,27 @@ def SendDouBaoMessage(user_input: str):
     res = client.chat(messages)
     return res
 
+def DouBaoLLm(messages: List[dict]):
+    api_key = configs.llm.API_KEY
+    if not api_key:
+        print("missing api key", file=sys.stderr)
+        sys.exit(1)
+    model = os.getenv("DOUBAO_MODEL", "doubao-1-5-lite-32k-250115")
+    base_url = os.getenv("DOUBAO_BASE_URL", "https://ark.cn-beijing.volces.com/api/v3")
+    client = DoubaoClient(api_key=api_key, model=model, base_url=base_url)
+    res = client.chat(messages)
+    if res is not None:
+        if 'choices' in res:
+            choices = res['choices']
+            if len(choices) > 0:
+                choice = choices[0]
+                if 'message' in choice:
+                    message = choice['message']
+                    if 'content' in message:
+                        content = message['content']
+                        role = message['role']
+                        return role, content
+    return None, None
 
 # ===================== 核心：封装豆包大模型为LangChain ChatModel =====================
 class DoubaoChatModel(BaseChatModel):

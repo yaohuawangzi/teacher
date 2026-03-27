@@ -17,7 +17,7 @@ parameters:
 ## 具体方法
 ### 查询学生的班级的人数
 ```bash
-python3 main.py query_class_info --class_id <class_id>
+python3 {baseDir}/scrpts/get_class_info.py --class_id <class_id>
 ```
 
 

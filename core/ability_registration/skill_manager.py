@@ -1,3 +1,5 @@
+import os.path
+
 import yaml
 from pathlib import Path
 
@@ -8,6 +10,9 @@ class SkillConfig:
         self.description = config['description']
         if 'parameters' in config:
             self.parameters = config['parameters']
+        self.markDown = config['markdown']
+        self.baseDir = config['baseDir']
+        self.filePath = config['filePath']
 
 
 class SkillManager:
@@ -49,11 +54,10 @@ class SkillManager:
                     continue
 
                 skill_id = skill_meta["id"]
-                self.skills[skill_id] = {
-                    "meta": skill_meta,
-                    "markdown": parts[2].strip(),
-                    "folder": skill_md
-                }
+                skill_meta["markdown"] = parts[2].strip()
+                skill_meta["baseDir"] = os.path.dirname(skill_md)
+                skill_meta["filePath"] = os.path.abspath(skill_md)
+                self.skills[skill_id] = self._create_skill_from_config(skill_meta)
                 print(f"✅ 注册技能: {skill_id} - {skill_meta['name']}")
 
     def _create_skill_from_config(self, config):

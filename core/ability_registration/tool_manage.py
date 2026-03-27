@@ -1,5 +1,9 @@
 import yaml
 from pathlib import Path
+from pydoc import locate
+import os
+import importlib
+
 
 class ToolConfig:
     def __init__(self, config):
@@ -8,6 +12,11 @@ class ToolConfig:
         self.description = config['description']
         if 'parameters' in config:
             self.parameters = config['parameters']
+        class_path = config["class"]
+        module_name, cls_name = class_path.rsplit(".", 1)
+        module = importlib.import_module(module_name)
+        cls = getattr(module, cls_name)
+        self.instance = cls
 
 class ToolManage:
     def __init__(self):
@@ -22,9 +31,10 @@ class ToolManage:
         # 4. 转换为绝对路径（消除../，避免路径歧义）
         self.config_path = self.config_path.resolve()
         self.load_tools()
+
     def load_tools(self):
-        for skill_md in self.config_path.glob("tools.md"):
-            with open(skill_md, 'r', encoding='utf-8') as f:
+        for tool_md in self.config_path.glob("tools.md"):
+            with open(tool_md, 'r', encoding='utf-8') as f:
                 content = f.read()
                 # 分割 YAML 头和 Markdown 正文
                 if "---" not in content:
@@ -37,18 +47,18 @@ class ToolManage:
                 try:
                     tool_metas = yaml.safe_load(yaml_content)
                 except Exception as e:
-                    print(f"解析 {skill_md} 失败: {e}")
+                    print(f"解析 {tool_md} 失败: {e}")
                     continue
 
                 # 校验必填字段
-                required_fields = ["name", "id", "description", "parameters"]
+                required_fields = ["name", "id", "description", "parameters", "class"]
                 for tool_meta in tool_metas:
                     if not all(f in tool_meta for f in required_fields):
-                        print(f"{skill_md} 缺少必填字段")
+                        print(f"{tool_md} 缺少必填字段")
                         continue
 
                     tool_id = tool_meta["id"]
-                    self.tools[tool_id] = tool_meta
+                    self.tools[tool_id] = self._create_tool_from_config(tool_meta)
                     print(f"✅ 注册tool: {tool_id} - {tool_meta['name']}")
 
     def _create_tool_from_config(self, config):

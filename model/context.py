@@ -46,8 +46,7 @@ class UserInfo:
 class MessageContext:
     # 对话唯一标识，用于关联多轮消息（如多轮对话）
     session_id: str
-    # 子对话标识
-    sub_session_id: str
+
     user: UserInfo  # 用户信息
     messages: List[Message] = field(default_factory=list)
 
@@ -56,14 +55,16 @@ class MessageContext:
 
     # 消息状态，active（进行中）/closed（已结束）/archived（已归档）
     status: str = "active"
+    # 子对话标识
+    sub_session_id: Optional[str] = None
 
 
     # 辅助方法：添加消息
     def add_message(self, role: str, content: str, metadata: Optional[MessageMetadata] = None, agent: Agent = None):
         """添加一条消息到对话"""
         self.messages.append(Message(
-            message_id=str(uuid.uuid4()),
             role=role,
+            message_id=uuid.uuid4().hex,
             content=content,
             metadata=metadata or MessageMetadata(),
             agent = agent

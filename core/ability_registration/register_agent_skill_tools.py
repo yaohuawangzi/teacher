@@ -29,14 +29,14 @@ class AgentRegister:
         agent_map = agent_manager.get_agent_map()
         skill_map = skill_manager.get_skill_map()
         tool_map = tool_manager.get_tool_map()
-        agent_skill_map = {}
-        for agent_id, agent_config in agent_map.items():
-            agent_skill_map[agent_id] = []
-            if agent_config.skills is not None:
-                for skill_id in agent_config.skills:
-                    if skill_id in skill_map:
-                        agent_skill_map[agent_id].append(skill_id)
+        # agent_skill_map = {}
+        # for agent_id, agent_config in agent_map.items():
+        #     agent_skill_map[agent_id] = []
+        #     if agent_config.skills is not None:
+        #         for skill_id in agent_config.skills:
+        #             if skill_id in skill_map:
+        #                 agent_skill_map[agent_id].append(skill_id)
         self.agent_map = agent_map
         self.skill_map = skill_map
         self.tool_map = tool_map
-        self.agent_skill_map = agent_skill_map
+        # self.agent_skill_map = agent_skill_map

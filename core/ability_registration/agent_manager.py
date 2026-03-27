@@ -1,26 +1,15 @@
 import yaml
 from pathlib import Path
-
+import os.path
 class AgentConfig:
     def __init__(self, config):
         self.id = config['id']
         self.name = config['name']
-        if 'enabled' in config:
-            self.enabled = config['enabled']
-        else:
-            self.enabled = True
         self.description = config['description']
-        self.personality = config['personality']
-        if 'core_competency' in config:
-            self.core_competency = config['core_competency']
-        if 'constraints' in config:
-            self.constraints = config['constraints']
-        if 'response_schema' in config:
-            self.response_schema = config['response_schema']
-        if 'request_schema' in config:
-            self.request_schema = config['request_schema']
-        if 'skills' in config:
-            self.skills = config['skills']
+        self.markDown = config['markdown']
+        self.baseDir = config['baseDir']
+
+
 
 class AgentManager:
     def __init__(self):
@@ -37,13 +26,34 @@ class AgentManager:
         self.load_agents()
 
     def load_agents(self):
-        for config_file in self.config_path.glob("**/*.yaml"):
+        for config_file in self.config_path.glob("**/*.md"):
             with open(config_file, 'r', encoding='utf-8') as f:
-                config = yaml.safe_load(f)
-                agent_id = config['id']
-                # 此处可以根据 config['type'] 实例化不同的 Agent 类
-                self.agents[agent_id] = self._create_agent_from_config(config)
-                print(f"✅ 注册agent: {agent_id} - {config['name']}")
+                content = f.read()
+                # 分割 YAML 头和 Markdown 正文
+                if "---" not in content:
+                    continue
+                parts = content.split("---", 2)
+                if len(parts) < 3:
+                    continue
+
+                yaml_content = parts[1].strip()
+                try:
+                    agent_meta = yaml.safe_load(yaml_content)
+                except Exception as e:
+                    print(f"解析 {config_file} 失败: {e}")
+                    continue
+                # 校验必填字段
+                required_fields = ["name", "id", "description"]
+                if not all(f in agent_meta for f in required_fields):
+                    print(f"{agent_meta} 缺少必填字段")
+                    continue
+
+                agent_id = agent_meta["id"]
+                agent_meta["markdown"] = parts[2].strip()
+                agent_meta["baseDir"] = os.path.dirname(config_file)
+                self.agents[agent_id] = self._create_agent_from_config(agent_meta)
+                print(f"✅ 注册agent: {agent_id} - {agent_meta['name']}")
+
 
     def _create_agent_from_config(self, config):
         # 伪代码：实际会更复杂，包括加载 Skill, Tool, Knowledge Base 等
