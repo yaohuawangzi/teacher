@@ -18,5 +18,22 @@
       description: python的执行命令
       required: true
       type: string
-    - name:
+    
+- id: knowledge_query
+  name: 知识库查询
+  description: 根据查询文本返回Top命中段
+  class: tools.knowledge_query.KnowledgeQueryTool
+  parameters:
+    - name: query_text
+      description: 查询文本
+      required: true
+      type: string
+    - name: top_k
+      description: 返回条数
+      required: false
+      type: integer
+    - name: where
+      description: 过滤条件
+      required: false
+      type: object
 ---

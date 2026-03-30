@@ -39,7 +39,7 @@ class DispatcherSkill:
                         type = data['type']
                         if type == "plan" or type == "replan":
                             query = "Planing 阶段完成，请按照规划继续往下调度执行"
-                        elif type == "action":
+                        elif type == "action" or type == "knowledge_query":
                             if 'tool_call' in data:
                                 tool_call = data['tool_call']
                                 params = tool_call['parameters']

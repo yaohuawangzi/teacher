@@ -1,6 +1,7 @@
 from core.ability_registration.agent_manager import AgentManager
 from core.ability_registration.skill_manager import SkillManager
 from core.ability_registration.tool_manage import ToolManage
+from core.ability_registration.knowledge_manager import KnowledgeManager
 
 
 
@@ -36,7 +37,9 @@ class AgentRegister:
         #         for skill_id in agent_config.skills:
         #             if skill_id in skill_map:
         #                 agent_skill_map[agent_id].append(skill_id)
+        knowledge = KnowledgeManager()
         self.agent_map = agent_map
         self.skill_map = skill_map
         self.tool_map = tool_map
+        self.knowledge = knowledge
         # self.agent_skill_map = agent_skill_map

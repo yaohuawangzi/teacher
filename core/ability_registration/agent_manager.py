@@ -66,6 +66,7 @@ class AgentManager:
     def get_agent_map(self):
         return self.agents
 
+
 if __name__ == "__main__":
     agent_manager = AgentManager()
     assistant_agent = agent_manager.get_agent("academic_tutor")
